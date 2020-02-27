@@ -18,9 +18,16 @@
     <!-- Your own CSS -->
     <link rel="stylesheet" href="/styles.css">
 
-    <title>Hello world!</title>
+    <title><%= @title %></title>
   </head>
   <body>
+
+    <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Your trusted source of Vietnamese restaurants reviews</h1>
+            </div>
+        </div>
+
 
     <div class="container mt-5">
       <%= yield %>
