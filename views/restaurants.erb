@@ -1,5 +1,11 @@
-<h1>Restaurants in Chicago</h1>
+<div class="row">
+    <div class="col-sm-8">
+        <h1>Restaurants in Chicago</h1>
 
-<% for restaurant in @restaurants %>
-    <p><a href="/restaurants/<%= restaurant[:id] %>"><%= restaurant[:name] %></a></p>
-<% end %>
+        <% for restaurant in @restaurants %>
+            <p><a href="/restaurants/<%= restaurant[:id] %>"><%= restaurant[:name] %></a></p>
+        <% end %>
+
+    </div>
+</div>
+    
