@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-sm-8">
+        <% if @current_user %>
+            <h1>You already added a review</h1>
+            <p><a href="/restaurants/<%= @restaurant[:id] %>" class="btn btn-secondary">Back to Restaurant</a></p>
+        <% else %>
+            <h1>Please sign in first to add your review</h1>
+            <p><a href="/logins/new" class="btn btn-secondary">Sign In</a></p>
+        <% end %>
+    </div>
+</div>

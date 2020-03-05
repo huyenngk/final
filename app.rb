@@ -49,11 +49,20 @@ end
 get "/restaurants/:id/reviews/create" do
     puts params
     @restaurant = restaurants_table.where(id: params["id"]).to_a[0]
-    reviews_table.insert(restaurant_id: params["id"],
-                       user_id: session["user_id"],
-                       enjoying: params["enjoying"],
-                       reviews: params["reviews"])
-    view "create_review"
+    
+    if  @current_user == nil
+        view "create_review_failed"
+    else
+        if reviews_table.where(user_id: @current_user[:id]) != nil
+            view "create_review_failed"
+        else
+            reviews_table.insert(restaurant_id: params["id"],
+                            user_id: session["user_id"],
+                            enjoying: params["enjoying"],
+                            reviews: params["reviews"])
+            view "create_review"
+        end
+    end
 end
 
 
@@ -63,9 +72,14 @@ end
 
 post "/users/create" do
     puts params
-    hashed_password = BCrypt::Password.create(params["password"])
-    users_table.insert(name: params["name"], email: params["email"], password: hashed_password)
-    view "create_user"
+    user = users_table.where(email: params["email"]).to_a[0]
+    if user == nil
+        hashed_password = BCrypt::Password.create(params["password"])
+        users_table.insert(name: params["name"], email: params["email"], password: hashed_password)
+        view "create_user"
+    else
+        view "create_signup_failed"
+    end
 end
 
 get "/logins/new" do
