@@ -11,21 +11,23 @@
         
         <!-- Hardcoded Data -->
 
-        <div class="media">
-            <i class="fas fa-thumbs-up fa-3x"></i>
-            <div class="media-body ml-5">
-                <h5 class="mt-0">Brian</h5>
-                Wouldn't miss it!
-            </div>
-        </div>
+    
 
-        <div class="media mt-3">
-            <i class="fas fa-thumbs-down fa-3x"></i>
-            <div class="media-body ml-5">
-                <h5 class="mt-0">Ben</h5>
-                Nope, I only eat Kale.
+        <% for review in @reviews %>
+            <div class="media">
+                <% if review[:enjoying] %>
+                    <i class="fas fa-thumbs-up fa-3x mr-3"></i>
+                <% else %>
+                    <i class="fas fa-thumbs-down fa-3x mr-3"></i>
+                <% end %>
+                <div class="media-body">
+                    <h5 class="mt-0">Kate</h5>
+                    <%= review[:reviews] %>
+                </div>
             </div>
-        </div>
+        <% end %>
+
+    
 
         <div class="mt-5">
             <a href="/restaurants/<%= @restaurant[:id] %>/reviews/new" class="btn btn-dark">Add your review</a>
@@ -37,7 +39,7 @@
         <p><%= @restaurant[:location] %></p>
         <h3>Phone</h3>
         <p><%= @restaurant[:phone] %></p>
-        <h3>Total Reviews</h3>
-        <p>?????</p>
+        <h3>Total Likes</h3>
+        <p><%= @like_count %></p>
     </div>
 </div>
