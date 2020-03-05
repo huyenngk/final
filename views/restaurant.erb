@@ -5,41 +5,45 @@
 
         <p><%= @restaurant[:description] %></p>
 
-        <h3>Popular dishes</h3>
+        <h5>Popular dishes</h5>
 
         <p><%= @restaurant[:popular_dishes] %></p>
         
-        <!-- Hardcoded Data -->
-
-    
-
+        
         <% for review in @reviews %>
             <div class="media">
                 <% if review[:enjoying] %>
-                    <i class="fas fa-thumbs-up fa-3x mr-3"></i>
+                    <i class="fas fa-thumbs-up fa-2x mr-3"></i>
                 <% else %>
-                    <i class="fas fa-thumbs-down fa-3x mr-3"></i>
+                    <i class="fas fa-thumbs-down fa-2x mr-3"></i>
                 <% end %>
                 <div class="media-body">
-                    <h5 class="mt-0">Kate</h5>
+                    <h5 class="mt-0"><%= @users_table.where(id: review[:user_id]).to_a[0][:name] %></h5>
                     <%= review[:reviews] %>
                 </div>
             </div>
         <% end %>
 
+        <p class="mt-5">
+            <% if @current_user %>
+                <a href="/restaurants/<%= @restaurant[:id] %>/reviews/new" class="btn btn-secondary">Add your review</a>
+            <% else %>
+                <a href="/logins/new" class="btn btn-secondary">Please sign in to review</a>
+            <% end %>
+        </p>
     
-
-        <div class="mt-5">
-            <a href="/restaurants/<%= @restaurant[:id] %>/reviews/new" class="btn btn-dark">Add your review</a>
-        </div>
-    </div>
+    </div> 
 
     <div class="col-sm-4">
-        <h3>Location</h3>
+        <h5>Location</h5>
         <p><%= @restaurant[:location] %></p>
-        <h3>Phone</h3>
+        <h5>Phone</h5>
         <p><%= @restaurant[:phone] %></p>
-        <h3>Total Likes</h3>
+        <h5>Total Likes</h5>
         <p><%= @like_count %></p>
     </div>
 </div>
+  
+
+
+    

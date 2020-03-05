@@ -25,18 +25,13 @@ end
 
 get "/" do
     @title = "Home Page"
-    puts "params: #{params}"
     pp restaurants_table.all.to_a
     @restaurants = restaurants_table.all.to_a
     view "restaurants"
 end 
 
 get "/restaurants/:id" do
-    puts "params: #{params}"
-
-    pp restaurants_table.where(id: params[:id]).to_a[0]
     @restaurant = restaurants_table.where(id: params[:id]).to_a[0]
-    
     @reviews = reviews_table.where(restaurant_id: @restaurant[:id])
     @like_count = reviews_table.where(restaurant_id: @restaurant[:id]).sum(:enjoying)
     @users_table = users_table
@@ -46,28 +41,16 @@ get "/restaurants/:id" do
 end
 
 get "/restaurants/:id/reviews/new" do
-    puts "params: #{params}"
-
     @restaurant = restaurants_table.where(id: params[:id]).to_a[0]
-
-    reviews_table.insert(restaurant_id: params["id"],
-                       user_id: session["user_id"],
-                       enjoying: params["enjoying"],
-                       reviews: params["reviews"])
-
     view "new_review"
 end
 
 
-
-# NEW 
-
-#done
 get "/restaurants/:id/reviews/create" do
     puts params
     @restaurant = restaurants_table.where(id: params["id"]).to_a[0]
     reviews_table.insert(restaurant_id: params["id"],
-                       #user_id: session["user_id"],
+                       user_id: session["user_id"],
                        enjoying: params["enjoying"],
                        reviews: params["reviews"])
     view "create_review"

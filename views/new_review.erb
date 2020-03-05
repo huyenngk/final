@@ -1,17 +1,21 @@
-<h1>Review for <%= @restaurant[:name] %></h1>
+<div class="row">
+    <div class="col-sm-8">
+        <h1>Review for <%= @restaurant[:name] %></h1>
 
-<form action="/restaurants/<%= @restaurant[:id] %>/reviews/create">
-  <div class="form-group">
-    <label>Did you enjoy your experience at the restaurant?</label>
-    <select class="form-control" name="enjoying">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
-    </select>
-  </div>
-  
-  <div class="form-group">
-    <label>Reviews</label>
-    <textarea class="form-control" rows="3" name="reviews"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <form action="/restaurants/<%= @restaurant[:id] %>/reviews/create">
+        <div class="form-group">
+            <label>Did you enjoy your experience at the restaurant?</label>
+            <select class="form-control" name="enjoying">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Reviews</label>
+            <textarea class="form-control" rows="3" name="reviews"></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
+</div>
