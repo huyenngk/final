@@ -5,7 +5,7 @@
 
         <p><%= @restaurant[:description] %></p>
 
-        <h5>Popular dishes</h5>
+        <i class="fas fa-soup"></i><h5>Popular dishes</h5>
 
         <p><%= @restaurant[:popular_dishes] %></p>
         
@@ -35,11 +35,11 @@
     </div> 
 
     <div class="col-sm-4">
-        <h5>Location</h5>
+        <i class="far fa-map fa-2x"></i><h5>Location</h5>
         <p><%= @restaurant[:location] %></p>
-        <h5>Phone</h5>
+        <i class="fas fa-phone-rotary fa-2x"></i><h5>Phone</h5>
         <p><%= @restaurant[:phone] %></p>
-        <h5>Total Likes</h5>
+        <i class="fas fa-thumbs-up fa-2x"></i><h5>Total Likes</h5>
         <p><%= @like_count %></p>
     </div>
 </div>
