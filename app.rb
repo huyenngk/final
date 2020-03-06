@@ -54,7 +54,7 @@ get "/restaurants/:id/reviews/create" do
     if  @current_user == nil
         view "create_review_failed"
     else
-        if reviews_table.where(user_id: @current_user[:id], restaurant_id: @restaurant[:id]) != nil
+        if reviews_table.where(user_id: @current_user[:id], restaurant_id: @restaurant[:id]).to_a[0] != nil
             view "create_review_failed"
         else
             reviews_table.insert(restaurant_id: params["id"],
