@@ -19,6 +19,12 @@ restaurants_table = DB.from(:restaurants)
 reviews_table = DB.from(:reviews)
 users_table = DB.from(:users)
 
+# Related to twilio:
+account_sid = "AC11abad30a09fe904e18de7564f60b7f1"
+auth_token = "d72c01da2b6d4026e7b5b92b4f40fcf8"
+client = Twilio::REST::Client.new(account_sid, auth_token)
+
+
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
@@ -38,7 +44,10 @@ get "/restaurants/:id" do
     @users_table = users_table
 
     results = Geocoder.search(@restaurant[:location])
-    @lat_lng = results.first.coordinates
+    lat_lng = results.first.coordinates
+    lat = lat_lng[0]
+    long = lat_lng[1]
+    @lat_long = "#{lat},#{long}"
     
     @title = "#{@restaurant[:name]}"
     view "restaurant"
@@ -80,7 +89,7 @@ post "/users/create" do
     user = users_table.where(email: params["email"]).to_a[0]
     if user == nil
         hashed_password = BCrypt::Password.create(params["password"])
-        users_table.insert(name: params["name"], email: params["email"], password: hashed_password)
+        users_table.insert(name: params["name"], email: params["email"], password: hashed_password, phone: params["phone"] )
         view "create_user"
     else
         view "create_signup_failed"
@@ -97,6 +106,14 @@ post "/logins/create" do
     if user && BCrypt::Password::new(user[:password]) == params["password"]
         session["user_id"] = user[:id]
         @current_user = user
+
+        #send a text to the user who just signed in
+        client.messages.create(
+        from: "+17089800189", 
+        to: @current_user[:phone],
+        body: "Hi #{@current_user[:name]}, you just signed in to RestaurantReview. If you did not, please inform us right away at 8123908281."
+)
+        
         view "create_login"
     else
         view "create_login_failed"
