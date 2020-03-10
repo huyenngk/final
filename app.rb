@@ -4,7 +4,8 @@ require "sinatra/reloader" if development?                                      
 require "sequel"                                                                      #
 require "logger"                                                                      #
 require "twilio-ruby"                                                                 #
-require "bcrypt"                                                                      #
+require "bcrypt"  
+require "geocoder"                                                              #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -35,6 +36,9 @@ get "/restaurants/:id" do
     @reviews = reviews_table.where(restaurant_id: @restaurant[:id])
     @like_count = reviews_table.where(restaurant_id: @restaurant[:id]).sum(:enjoying)
     @users_table = users_table
+
+    results = Geocoder.search(@restaurant[:location])
+    @lat_lng = results.first.coordinates
     
     @title = "#{@restaurant[:name]}"
     view "restaurant"
