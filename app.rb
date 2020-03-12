@@ -20,8 +20,8 @@ reviews_table = DB.from(:reviews)
 users_table = DB.from(:users)
 
 # Related to twilio:
-account_sid = "AC11abad30a09fe904e18de7564f60b7f1"
-auth_token = "d72c01da2b6d4026e7b5b92b4f40fcf8"
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_ACCOUNT_TOKEN"]
 client = Twilio::REST::Client.new(account_sid, auth_token)
 
 
@@ -74,7 +74,7 @@ get "/restaurants/:id/reviews/create" do
                             user_id: session["user_id"],
                             enjoying: params["enjoying"],
                             reviews: params["reviews"])
-            view "create_review"
+            redirect "/restaurants/#{@restaurant[:id]}"
         end
     end
 end
@@ -90,7 +90,7 @@ post "/users/create" do
     if user == nil
         hashed_password = BCrypt::Password.create(params["password"])
         users_table.insert(name: params["name"], email: params["email"], password: hashed_password, phone: params["phone"] )
-        view "create_user"
+        redirect "/logins/new"
     else
         view "create_signup_failed"
     end
@@ -114,7 +114,7 @@ post "/logins/create" do
         body: "Hi #{@current_user[:name]}, you just signed in to RestaurantReview. If you did not, please inform us right away at 8123908281."
 )
         
-        view "create_login"
+        redirect "/"
     else
         view "create_login_failed"
     end
@@ -123,5 +123,5 @@ end
 get "/logout" do
     session["user_id"] = nil
     @current_user = nil
-    view "logout"
+    redirect "/logins/new"
 end
