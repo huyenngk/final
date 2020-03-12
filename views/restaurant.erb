@@ -35,7 +35,7 @@
     </div> 
 
     <div class="col-sm-4">
-        <i class="far fa-map fa-2x"></i><h5>Location</h5>
+        <h5><i class="margin_right far fa-map fa-2x"></i>Location</h5>
         <p><%= @restaurant[:location] %></p>
          <iframe
         width="400"
@@ -44,9 +44,9 @@
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
           &q=<%= @lat_long %>&zoom=17" allowfullscreen>
       </iframe>
-        <i class="fas fa-phone-rotary fa-2x"></i><h5>Phone</h5>
+        <h5><i class="margin_right fas fa-phone fa-2x"></i>Phone</h5>
         <p><%= @restaurant[:phone] %></p>
-        <i class="fas fa-thumbs-up fa-2x"></i><h5>Total Likes</h5>
+        <h5><i class="margin_right fas fa-thumbs-up fa-2x"></i>Total Likes</h5>
         <p><%= @like_count %></p>
     </div>
 </div>
